@@ -38,13 +38,12 @@ const passwordGenerator = (appName) => {
     }
 }
 
-//Add rows whenever a password is generated for a new app
 const addRows = () => { 
     let newRow = tableElem.insertRow(tableElem.length);
-    for(let j = 0; j < 2; j++){
-        let cell = newRow.insertCell(j);
-        (j === 0) ? cell.innerHTML = apps[apps.length-1].name : cell.innerHTML = apps[apps.length-1].password
-    }
+    let cell = newRow.insertCell(0);
+    cell.innerHTML = apps[apps.length-1].name;
+    cell = newRow.insertCell(1);
+    cell.innerHTML =apps[apps.length-1].password;
 }
 
 
