@@ -51,5 +51,9 @@ const addRows = () => {
 const apps = [];
 
 generateHandler.addEventListener("click", function(){
-    if(passwordGenerator(appNameElem.value)) addRows();
+    if(appNameElem.value){
+        if(passwordGenerator(appNameElem.value)) addRows();
+    } else {
+        alert('¡Debe llenar el campo de nombre de la aplicación!')
+    }
 });
