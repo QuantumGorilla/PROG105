@@ -1,8 +1,12 @@
-//16 caracteres, 1 numero 1 mayuscula y minuscula
+let generateHandler = document.querySelector(".btn");
+let appNameElem = document.querySelector(".app-field");
+let tableElem = document.querySelector(".table");
+
+//Function checks if an app already has an password
 const createdPassword = (appName) => {
     if (apps.length != 0){
         for(let i = 0; i < apps.length; i++){
-            if(apps[i][appName]){
+            if(apps[i].name === appName){
                 return true;
             }
         }
@@ -10,9 +14,13 @@ const createdPassword = (appName) => {
     }
 }
 
+/**Function generates password with at least 1 uppercase letter, 1 lowercase letter, 1 number and 
+ * 16 chacaracters length
+*/
 const passwordGenerator = (appName) => {
     if(createdPassword(appName)){
         alert("¡Ya existe una contraseña para esta app!");
+        return false;
     } else {
         let password = '';
         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -25,17 +33,23 @@ const passwordGenerator = (appName) => {
         for (let i = 0; i < 13; i++) {
             password += characters.charAt(Math.floor(Math.random() * characters.length));
         }
-        apps.push({[appName]: password});
-        return apps;
+        apps.push({'name':appName, 'password':password});
+        return true;
     }
 }
+
+//Add rows whenever a password is generated for a new app
+const addRows = () => { 
+    let newRow = tableElem.insertRow(tableElem.length);
+    for(let j = 0; j < 2; j++){
+        let cell = newRow.insertCell(j);
+        (j === 0) ? cell.innerHTML = apps[apps.length-1].name : cell.innerHTML = apps[apps.length-1].password
+    }
+}
+
 
 const apps = [];
-while(true){
-    passwordGenerator(prompt("Nombre de la app que desea generar la contraseña:"));
-    if(!confirm("¿Desea ingresar otra contraseña para otra app?")){
-        break;
-    }
-}
 
-console.log(apps);
+generateHandler.addEventListener("click", function(){
+    if(passwordGenerator(appNameElem.value)) addRows();
+});
