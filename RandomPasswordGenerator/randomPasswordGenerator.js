@@ -6,7 +6,7 @@ let tableElem = document.querySelector(".table");
 const createdPassword = (appName) => {
     if (apps.length != 0){
         for(let i = 0; i < apps.length; i++){
-            if(apps[i].name === appName){
+            if(apps[i].name.toLowerCase() === appName.toLowerCase()){
                 return true;
             }
         }
@@ -20,7 +20,6 @@ const createdPassword = (appName) => {
 const passwordGenerator = (appName) => {
     if(createdPassword(appName)){
         alert("¡Ya existe una contraseña para esta app!");
-        return false;
     } else {
         let password = '';
         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -34,7 +33,7 @@ const passwordGenerator = (appName) => {
             password += characters.charAt(Math.floor(Math.random() * characters.length));
         }
         apps.push({'name':appName, 'password':password});
-        return true;
+        addRows()
     }
 }
 
@@ -52,7 +51,7 @@ const apps = [];
 
 generateHandler.addEventListener("click", function(){
     if(appNameElem.value){
-        if(passwordGenerator(appNameElem.value)) addRows();
+        passwordGenerator(appNameElem.value);
     } else {
         alert('¡Debe llenar el campo de nombre de la aplicación!')
     }
